@@ -5,3 +5,5 @@
 ## Schematic
 
 ## Bill of Materials
+
+<img src="images/Electronic Watch Foundation.png" width="800">
