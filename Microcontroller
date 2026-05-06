@@ -1,0 +1,57 @@
+#include <LedControl.h>
+
+// DIN, CLK, CS
+LedControl lc = LedControl(12, 11, 10, 1);
+
+unsigned long previousMillis = 0;
+const long interval = 1000;
+
+int seconds = 0;
+int minutes = 0;
+int hours = 12;
+
+void setup() {
+  lc.shutdown(0, false);
+  lc.setIntensity(0, 8);
+  lc.clearDisplay(0);
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+
+    seconds++;
+
+    if (seconds == 60) {
+      seconds = 0;
+      minutes++;
+    }
+
+    if (minutes == 60) {
+      minutes = 0;
+      hours++;
+    }
+
+    if (hours == 24) {
+      hours = 0;
+    }
+
+    displayTime();
+  }
+}
+
+void displayTime() {
+  lc.clearDisplay(0);
+
+  int h1 = hours / 10;
+  int h2 = hours % 10;
+  int m1 = minutes / 10;
+  int m2 = minutes % 10;
+
+  lc.setDigit(0, 3, h1, false);
+  lc.setDigit(0, 2, h2, false);
+  lc.setDigit(0, 1, m1, false);
+  lc.setDigit(0, 0, m2, false);
+}
